@@ -57,25 +57,36 @@ public class BankServices {
         }
     }
 
-    // This method is intentionally flawed
-    public void transferMoneyWithOutACID(Long fromAccountId, Long toAccountId, Double amount) {
+    // This method is intentionally flawed to demonstrate the violation of ACID properties
+    public void transferMoneyWithoutACID(Long fromAccountId, Long toAccountId, Double amount) {
         BankAccount fromAccount = bankAccountRepository.findById(fromAccountId).orElse(null);
         BankAccount toAccount = bankAccountRepository.findById(toAccountId).orElse(null);
 
         if (fromAccount != null && toAccount != null) {
-            fromAccount.setBalance(fromAccount.getBalance() - amount); // Deduct from the sender
 
+            // Deduct from the sender
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+
+            // Not Atomic: The operation can be incomplete if the method exits early
             // Simulate a failure here (breaking Atomicity)
             if (Math.random() > 0.5) {
                 return; // Early return, transaction is not completed
             }
 
-            toAccount.setBalance(toAccount.getBalance() + amount); // Add to the receiver
-            bankAccountRepository.save(toAccount); // Only the receiver account is updated (breaking Consistency)
+            // Add to the receiver
+            toAccount.setBalance(toAccount.getBalance() + amount);
 
-            // No transaction management (breaking Isolation)
-            // No durability checks or error handling
+            // Not Consistent: Only the receiver account is updated if the method exits early
+            bankAccountRepository.save(toAccount);
+
+            // Not Isolated: No transaction management means other transactions can interfere
+            // with the data being manipulated by this transaction before it's finished
+
+            // Not Durable: There are no mechanisms to ensure that the transaction's changes
+            // survive in case of a system failure after the method completes
         }
+        // Additionally, there is no error handling or rollback mechanism in case of a failure,
+        // which further violates the principle of Atomicity
     }
 }
 
