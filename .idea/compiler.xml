@@ -7,14 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Transaction" />
+        <module name="Async" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Async" target="21" />
       <module name="Transaction" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Async" options="-parameters" />
       <module name="Transaction" options="-parameters" />
     </option>
   </component>
