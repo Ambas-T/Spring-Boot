@@ -5,7 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @Service
 public class BankServices {
@@ -13,14 +16,11 @@ public class BankServices {
     @Autowired
     private BankAccountRepository bankAccountRepository;
 
+    private final PlatformTransactionManager transactionManager;
+
     private final BankAccountRepository bankAccountRepositoryACID;
 
     private static final Logger logger = LoggerFactory.getLogger(BankServices.class);
-
-    @Autowired
-    public BankServices(BankAccountRepository bankAccountRepository) {
-        this.bankAccountRepositoryACID = bankAccountRepository;
-    }
 
     @Transactional
     public void transferMoneyWithACID(Long fromAccountId, Long toAccountId, Double amount) {
@@ -87,6 +87,40 @@ public class BankServices {
         }
         // Additionally, there is no error handling or rollback mechanism in case of a failure,
         // which further violates the principle of Atomicity
+    }
+
+
+    // Programmatic Transaction Management
+    public BankServices(BankAccountRepository bankAccountRepository, PlatformTransactionManager transactionManager) {
+        this.bankAccountRepositoryACID = bankAccountRepository;
+        this.transactionManager = transactionManager;
+    }
+
+    public void transferMoneyWithProgrammaticTx(Long fromAccountId, Long toAccountId, Double amount) {
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+
+        try {
+            validateTransfer(fromAccountId, toAccountId, amount);
+
+            BankAccount fromAccount = bankAccountRepositoryACID.findById(fromAccountId)
+                    .orElseThrow(() -> new EntityNotFoundException("Sender account not found."));
+            BankAccount toAccount = bankAccountRepositoryACID.findById(toAccountId)
+                    .orElseThrow(() -> new EntityNotFoundException("Receiver account not found."));
+
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount);
+
+            bankAccountRepositoryACID.save(fromAccount);
+            bankAccountRepositoryACID.save(toAccount);
+
+            transactionManager.commit(status); // Commit the transaction
+
+            logger.info("Transfer successful: {} transferred from account {} to account {}", amount, fromAccountId, toAccountId);
+        } catch (Exception e) {
+            transactionManager.rollback(status); // Rollback the transaction on exception
+            logger.error("Transfer failed: ", e);
+            throw e;
+        }
     }
 }
 
