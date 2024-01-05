@@ -67,13 +67,10 @@ public class BankServices {
             fromAccount.setBalance(fromAccount.getBalance() - amount);
 
             if (Math.random() > 0.5) {
-                return; // Early return, transaction is not completed
+                return;
             }
-
             toAccount.setBalance(toAccount.getBalance() + amount);
-
             bankAccountRepository.save(toAccount);
-
         }
     }
 
