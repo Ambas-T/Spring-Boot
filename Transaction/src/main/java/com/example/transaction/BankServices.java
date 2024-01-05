@@ -64,29 +64,17 @@ public class BankServices {
 
         if (fromAccount != null && toAccount != null) {
 
-            // Deduct from the sender
             fromAccount.setBalance(fromAccount.getBalance() - amount);
 
-            // Not Atomic: The operation can be incomplete if the method exits early
-            // Simulate a failure here (breaking Atomicity)
             if (Math.random() > 0.5) {
                 return; // Early return, transaction is not completed
             }
 
-            // Add to the receiver
             toAccount.setBalance(toAccount.getBalance() + amount);
 
-            // Not Consistent: Only the receiver account is updated if the method exits early
             bankAccountRepository.save(toAccount);
 
-            // Not Isolated: No transaction management means other transactions can interfere
-            // with the data being manipulated by this transaction before it's finished
-
-            // Not Durable: There are no mechanisms to ensure that the transaction's changes
-            // survive in case of a system failure after the method completes
         }
-        // Additionally, there is no error handling or rollback mechanism in case of a failure,
-        // which further violates the principle of Atomicity
     }
 
 
