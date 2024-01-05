@@ -23,7 +23,7 @@ public class BankServices {
     private static final Logger logger = LoggerFactory.getLogger(BankServices.class);
 
     @Transactional
-    public void transferMoneyWithACID(Long fromAccountId, Long toAccountId, Double amount) {
+    public void transferMoneyWithACID(Long fromAccountId, Long toAccountId, Double amount) throws TransferMoneyException {
         try {
             validateTransfer(fromAccountId, toAccountId, amount);
 
@@ -41,7 +41,7 @@ public class BankServices {
             logger.info("Transfer successful: {} transferred from account {} to account {}", amount, fromAccountId, toAccountId);
         } catch (Exception e) {
             logger.error("Transfer failed: ", e);
-            throw e; // Rethrow the exception for the caller to handle appropriately
+            throw new TransferMoneyException("Error during money transfer.", e);
         }
     }
 
@@ -66,12 +66,26 @@ public class BankServices {
 
             fromAccount.setBalance(fromAccount.getBalance() - amount);
 
+            // Not Atomic: The operation can be incomplete if the method exits early
+            // Simulate a failure here (breaking Atomicity)
             if (Math.random() > 0.5) {
-                return;
+                return; // Early return, transaction is not completed
             }
+
+            // Add to the receiver
             toAccount.setBalance(toAccount.getBalance() + amount);
+
+            // Not Consistent: Only the receiver account is updated if the method exits early
             bankAccountRepository.save(toAccount);
+
+            // Not Isolated: No transaction management means other transactions can interfere
+            // with the data being manipulated by this transaction before it's finished
+
+            // Not Durable: There are no mechanisms to ensure that the transaction's changes
+            // survive in case of a system failure after the method completes
         }
+        // Additionally, there is no error handling or rollback mechanism in case of a failure,
+        // which further violates the principle of Atomicity
     }
 
 
@@ -81,7 +95,7 @@ public class BankServices {
         this.transactionManager = transactionManager;
     }
 
-    public void transferMoneyWithProgrammaticTx(Long fromAccountId, Long toAccountId, Double amount) {
+    public void transferMoneyWithProgrammaticTx(Long fromAccountId, Long toAccountId, Double amount) throws TransferMoneyException {
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
 
         try {
@@ -104,7 +118,7 @@ public class BankServices {
         } catch (Exception e) {
             transactionManager.rollback(status); // Rollback the transaction on exception
             logger.error("Transfer failed: ", e);
-            throw e;
+            throw new TransferMoneyException("Error during money transfer.", e);
         }
     }
 }
