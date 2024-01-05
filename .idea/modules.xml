@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Async/Async.iml" filepath="$PROJECT_DIR$/Async/Async.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Spring-Boot.iml" filepath="$PROJECT_DIR$/.idea/Spring-Boot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Transaction/Transaction.iml" filepath="$PROJECT_DIR$/Transaction/Transaction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UserService/UserService.iml" filepath="$PROJECT_DIR$/UserService/UserService.iml" />
     </modules>
   </component>
 </project>
