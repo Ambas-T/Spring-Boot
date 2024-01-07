@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Async/Async.iml" filepath="$PROJECT_DIR$/Async/Async.iml" />
       <module fileurl="file://$PROJECT_DIR$/BookService/BookService.iml" filepath="$PROJECT_DIR$/BookService/BookService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BookingService/BookingService.iml" filepath="$PROJECT_DIR$/BookingService/BookingService.iml" />
       <module fileurl="file://$PROJECT_DIR$/CarService/CarService.iml" filepath="$PROJECT_DIR$/CarService/CarService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlightService/FlightService.iml" filepath="$PROJECT_DIR$/FlightService/FlightService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HotelService/HotelService.iml" filepath="$PROJECT_DIR$/HotelService/HotelService.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Spring-Boot.iml" filepath="$PROJECT_DIR$/.idea/Spring-Boot.iml" />
       <module fileurl="file://$PROJECT_DIR$/Transaction/Transaction.iml" filepath="$PROJECT_DIR$/Transaction/Transaction.iml" />
     </modules>
