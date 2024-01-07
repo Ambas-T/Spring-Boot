@@ -6,16 +6,20 @@ import com.example.bookingservice.DTO.CarBookingResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class CarBookingService {
-    // Assuming you have a repository or a client to interact with the CarService
+
     @Autowired
-    private CarClient carClient; // This is a Feign client to be defined next
+    private CarClient carClient;
 
     public Long bookCar(Long bookingId, String carDetails) {
-        // Convert carDetails string to the required format or object
-        // Call the CarService to perform the booking
-        CarBookingResponse response = carClient.bookCar(new CarBookingRequest(bookingId, carDetails));
+        LocalDate today = LocalDate.now();
+
+        // Create a CarBookingRequest with today's date for both start and end dates
+        CarBookingRequest request = new CarBookingRequest(bookingId, carDetails, today, today);
+        CarBookingResponse response = carClient.bookCar(request);
 
         // Handle the response
         if (response.isSuccess()) {

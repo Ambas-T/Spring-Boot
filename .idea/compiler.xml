@@ -7,18 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CarService" />
         <module name="HotelService" />
+        <module name="BookingService" />
         <module name="Transaction" />
         <module name="FlightService" />
         <module name="Async" />
-        <module name="CarService" />
-        <module name="BookingService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Async" target="11" />
       <module name="BookingService" target="17" />
-      <module name="BookService" target="17" />
+      <module name="BookService" target="11" />
       <module name="CarService" target="11" />
       <module name="FlightService" target="11" />
       <module name="HotelService" target="11" />
