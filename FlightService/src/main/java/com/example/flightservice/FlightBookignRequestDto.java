@@ -1,4 +1,4 @@
-package com.example.bookingservice.DTO;
+package com.example.flightservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HotelBookingRequest {
+public class FlightBookignRequestDto {
     private Long userId;
-    private String hotelName;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private String carType;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }

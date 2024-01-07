@@ -6,6 +6,8 @@ import com.example.bookingservice.DTO.HotelBookingResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class HotelBookingService {
 
@@ -14,7 +16,8 @@ public class HotelBookingService {
 
     public Long bookHotel(Long id, String hotelDetails) {
         try {
-            HotelBookingResponse response = hotelClient.bookHotel(new HotelBookingRequest(id, hotelDetails));
+            LocalDate today = LocalDate.now();
+            HotelBookingResponse response = hotelClient.bookHotel(new HotelBookingRequest(id, hotelDetails, today, today));
             if (response.isSuccess()) {
                 return response.getBookingId();
             } else {

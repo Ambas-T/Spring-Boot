@@ -15,7 +15,7 @@ public class FlightController {
 
     // Create a new flight booking
     @PostMapping("/book")
-    public ResponseEntity<FlightBooking> bookFlight(@RequestBody FlightBooking booking) {
+    public ResponseEntity<FlightBooking> bookFlight(@RequestBody FlightBookignRequestDto booking) {
         FlightBooking newBooking = flightService.bookFlight(booking);
         return ResponseEntity.ok(newBooking);
     }

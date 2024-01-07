@@ -13,8 +13,17 @@ public class FlightService {
     private FlightBookingRepository flightBookingRepository;
 
     @Transactional
-    public FlightBooking bookFlight(FlightBooking booking) {
-        return flightBookingRepository.save(booking);
+    public FlightBooking bookFlight(FlightBookignRequestDto booking) {
+        FlightBooking entity = new FlightBooking();
+        mapDtoToEntity(booking, entity);
+        return flightBookingRepository.save(entity);
+    }
+
+    private void mapDtoToEntity(FlightBookignRequestDto dto, FlightBooking entity) {
+        entity.setId(dto.getUserId());
+        entity.setFlightNumber(dto.getCarType());
+        entity.setDepartureTime(dto.getStartDate());
+        entity.setArrivalTime(dto.getEndDate());
     }
 
     public FlightBooking getBookingById(Long id) {

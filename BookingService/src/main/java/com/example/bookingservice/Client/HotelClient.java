@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "hotelService", url = "http://localhost:8082") // Adjust the URL
 public interface HotelClient {
 
-    @PostMapping("/hotel/book")
+    @PostMapping("/hotel-reservations")
     HotelBookingResponse bookHotel(@RequestBody HotelBookingRequest request);
 
     @PostMapping("/hotel/cancel/{hotelBookingId}")
