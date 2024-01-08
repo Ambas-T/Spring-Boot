@@ -58,10 +58,8 @@ public class HotelReservationController {
 
     private HotelReservationDto mapToDto(HotelReservation reservation) {
         HotelReservationDto dto = new HotelReservationDto();
-        dto.setUserId(reservation.getUserId());
-        dto.setHotelName(reservation.getHotelName());
-        dto.setCheckInDate(reservation.getCheckInDate());
-        dto.setCheckOutDate(reservation.getCheckOutDate());
+        dto.setBookingId(reservation.getUserId());
+        dto.setSuccess(true);
         return dto;
     }
 }

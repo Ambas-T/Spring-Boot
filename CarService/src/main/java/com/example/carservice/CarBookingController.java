@@ -54,8 +54,9 @@ public class CarBookingController {
     }
 
     private CarBookingDto mapToDto(CarBooking carBooking) {
-        // Method to map CarBooking entity to CarBookingDto
-        // Implement the mapping logic
-        return new CarBookingDto();
+        CarBookingDto response = new CarBookingDto();
+        response.setBookingId(carBooking.getId());
+        response.setSuccess(true);
+        return response;
     }
 }

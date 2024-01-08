@@ -10,8 +10,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HotelReservationDto {
-    private Long userId;
-    private String hotelName;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private boolean success;
+    private Long bookingId;
 }

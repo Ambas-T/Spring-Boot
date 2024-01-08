@@ -15,9 +15,12 @@ public class FlightController {
 
     // Create a new flight booking
     @PostMapping("/book")
-    public ResponseEntity<FlightBooking> bookFlight(@RequestBody FlightBookignRequestDto booking) {
+    public ResponseEntity<FlightBookingRequestDTO> bookFlight(@RequestBody FlightBookignRequestDto booking) {
         FlightBooking newBooking = flightService.bookFlight(booking);
-        return ResponseEntity.ok(newBooking);
+        FlightBookingRequestDTO response = new FlightBookingRequestDTO();
+        response.setBookingId(newBooking.getId());
+        response.setSuccess(true);
+        return ResponseEntity.ok(response);
     }
 
     // Get a specific flight booking by ID

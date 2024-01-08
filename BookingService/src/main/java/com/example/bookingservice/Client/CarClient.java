@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "carService", url = "http://localhost:8080") // Replace with actual service URL
+@FeignClient(name = "carService", url = "http://localhost:8081") // Replace with actual service URL
 public interface CarClient {
 
     @PostMapping("/car-bookings")

@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -42,10 +44,12 @@ public class HotelService {
 
     private void mapDtoToEntity(HotelReservationDto dto, HotelReservation entity) {
         // Implement the mapping logic from DTO to entity
-        entity.setUserId(dto.getUserId());
-        entity.setHotelName(dto.getHotelName());
-        entity.setCheckInDate(dto.getCheckInDate());
-        entity.setCheckOutDate(dto.getCheckOutDate());
-        // Map other fields as necessary
+        LocalDate today = LocalDate.now();
+        entity.setUserId(dto.getBookingId());
+        entity.setHotelName("Sharaton");
+        entity.setCheckInDate(today);
+        entity.setCheckOutDate(today);
+        dto.setSuccess(true);
+        dto.setBookingId(entity.getUserId());
     }
 }

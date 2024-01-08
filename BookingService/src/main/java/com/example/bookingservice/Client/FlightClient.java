@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "flightService", url = "http://localhost:8081") // Adjust the URL
+@FeignClient(name = "flightService", url = "http://localhost:8083") // Adjust the URL
 public interface FlightClient {
 
-    @PostMapping("/flight/book")
+    @PostMapping("/api/flights/book")
     FlightBookingResponse bookFlight(@RequestBody FlightBookingRequest request);
 
     @PostMapping("/flight/cancel/{flightBookingId}")
